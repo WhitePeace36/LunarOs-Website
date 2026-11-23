@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User guide – Lunar</title>
+<meta name="description" content="Short guides for getting the most out of Lunar, starting with making sure your games get CPU priority.">
+<meta name="theme-color" content="#0d1626">
+<link rel="icon" href="assets/lunar-logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--ice:#f2f8ff;--frost:#cfe6ff;--sky:#7cc4ff;--blue:#2f80ed;--night:#0d1626;--deep:#080f1b;--line:rgba(124,196,255,.14);--muted:#9fb3cf;--good:#9ce3b5;--warn:#ffc46b}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{background:var(--deep);color:var(--frost);font:16px/1.7 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--sky);text-decoration:none}a:hover{color:var(--ice)}
+code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.88em;color:var(--sky);background:rgba(47,128,237,.12);padding:1px 6px;border-radius:5px}
+kbd{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.82em;color:var(--ice);background:#13233f;border:1px solid rgba(124,196,255,.3);border-bottom-width:2px;padding:1px 7px;border-radius:6px;white-space:nowrap}
+b,strong{color:var(--ice);font-weight:600}
+.nav{border-bottom:1px solid var(--line);background:var(--night)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:700 21px Quicksand,sans-serif;color:var(--ice)}
+.brand img{width:28px;height:28px}
+.back{font-size:14px;color:var(--muted)}
+main{padding:64px 0 96px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:56px;align-items:start}
+h1{font:700 clamp(32px,5vw,44px)/1.1 Quicksand,sans-serif;color:var(--ice);margin-bottom:8px}
+.sub{color:var(--muted);margin-bottom:44px;font-size:16px;max-width:620px}
+h2{font:600 clamp(24px,3vw,30px)/1.2 Quicksand,sans-serif;color:var(--ice);margin-bottom:12px}
+h3{font:600 19px/1.3 Quicksand,sans-serif;color:var(--ice);margin-bottom:6px}
+p{margin-bottom:14px}
+.guide{padding:32px;border:1px solid var(--line);border-radius:18px;background:rgba(11,30,63,.3)}
+.guide>p{color:var(--muted);max-width:640px}
+.tag{display:inline-block;font-size:12px;font-weight:500;color:var(--sky);background:rgba(47,128,237,.14);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin-bottom:14px}
+.steps{list-style:none;counter-reset:s;margin-top:28px;display:grid;gap:4px}
+.steps>li{min-width:0;counter-increment:s;position:relative;padding:2px 0 26px 60px}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:700 17px Quicksand,sans-serif;color:var(--ice);background:#0b1e3f;border:1px solid rgba(124,196,255,.35)}
+.steps>li:not(:last-child)::after{content:"";position:absolute;left:19px;top:46px;bottom:4px;width:1px;background:linear-gradient(var(--line),transparent)}
+.steps p{color:var(--muted);font-size:15px;margin-bottom:10px}
+.steps ul{color:var(--muted);font-size:15px;padding-left:20px;margin-bottom:10px}
+.steps li li{margin-bottom:4px}
+/* Sysmon example */
+.mock{overflow-x:auto;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0a1424;margin:14px 0 8px;max-width:560px}
+.mock-bar{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);background:rgba(11,30,63,.6);font-size:13px;color:var(--muted)}
+.mock-bar b{font-weight:500}
+.mock-bar span{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--frost);background:#13233f;border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-weight:500;color:var(--muted);text-align:left;padding:8px 14px;border-bottom:1px solid var(--line);font-size:12.5px}
+td{padding:9px 14px;border-bottom:1px solid rgba(124,196,255,.07);color:var(--frost);font-family:"JetBrains Mono",monospace;font-size:13px}
+tr:last-child td{border-bottom:0}
+th.n,td.n{text-align:right}
+.good{color:var(--good)}.bad{color:var(--warn)}
+.cap{font-size:13px;color:#6f84a3;margin-bottom:14px}
+.result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.result div{padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:#0a1424;font-size:14.5px;color:var(--muted)}
+.result strong{display:block;font-size:15px;margin-bottom:2px}
+.result .ok{border-color:rgba(156,227,181,.35)}.result .ok strong{color:var(--good)}
+.result .no{border-color:rgba(255,196,107,.35)}.result .no strong{color:var(--warn)}
+.tips{margin-top:8px;padding:20px 24px;border-radius:14px;border:1px solid rgba(124,196,255,.3);background:rgba(47,128,237,.08)}
+.tips h3{margin-bottom:10px}
+.tips ul{padding-left:20px;color:var(--muted);font-size:15px}
+.tips li{margin-bottom:6px}
+.toc{position:sticky;top:24px;font-size:14px;border-left:1px solid var(--line);padding-left:20px}
+.toc b{display:block;margin-bottom:10px}
+.toc ol{list-style:none;display:grid;gap:7px}
+.toc a{color:var(--muted)}.toc a:hover{color:var(--ice)}
+.toc .soon{color:#566a88;font-size:13px;margin-top:6px}
+footer{border-top:1px solid var(--line);padding:28px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;gap:20px;flex-wrap:wrap}footer a{color:var(--muted)}footer a:hover{color:var(--ice)}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+@media(max-width:600px){.wrap{padding:0 16px}.guide{padding:20px 14px}.steps>li{padding-left:48px}.result{grid-template-columns:1fr}th,td{padding:8px 10px}th:nth-child(3),td:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap"><a class="brand" href="index.html"><img src="assets/lunar-logo.svg" alt="">Lunar</a><a class="back" href="index.html">&larr; Back to Lunar</a></div></header>
+
+<main><div class="wrap"><div class="layout"><div>
+<h1>User guide</h1>
+<p class="sub">Short how-tos for getting the most out of Lunar.</p>
+
+<section class="guide" id="game-priority">
+  <span class="tag">Gaming &middot; 3 minutes</span>
+  <h2>Make sure your game gets priority</h2>
+  <p>Lunar gives games a higher CPU priority, a nice value of <code>-5</code>, so the Elara scheduler runs them before background tasks. This happens automatically for games that have a rule: Lunar's rules already cover more than 13,000 of them. If your game is missing, you can add it in a minute.</p>
+
+  <ol class="steps">
+    <li>
+      <h3>Start your game</h3>
+      <p>Get into the game itself, not just the launcher. Some games start a separate process once you're past the menu.</p>
+    </li>
+    <li>
+      <h3>Check its nice value in Sysmon</h3>
+      <p>Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd> to open Sysmon and switch to the <b>Details</b> tab. Press <kbd>Ctrl</kbd> + <kbd>F</kbd> and type part of the game's name. Look at the <b>Nice</b> column:</p>
+      <div class="mock" aria-label="Example of Sysmon's Details tab">
+        <div class="mock-bar"><b>Sysmon &middot; Details</b><span>Ctrl+F: game</span></div>
+        <table>
+          <thead><tr><th>Name</th><th class="n">PID</th><th class="n">CPU</th><th class="n">Nice</th></tr></thead>
+          <tbody>
+            <tr><td>RacingGame.exe</td><td class="n">48213</td><td class="n">31%</td><td class="n good">-5</td></tr>
+            <tr><td>SpaceGame.exe</td><td class="n">51907</td><td class="n">27%</td><td class="n bad">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cap">Example with made-up game names.</p>
+      <div class="result">
+        <div class="ok"><strong>Nice is -5</strong>The game already has a rule. You're done.</div>
+        <div class="no"><strong>Nice is 0 or something else</strong>The game has no rule yet. Continue with step 3.</div>
+      </div>
+      <p>Windows games running through Proton usually show up under their <code>.exe</code> name.</p>
+    </li>
+    <li>
+      <h3>Add the game in Ananicy Configurator</h3>
+      <p>Leave the game running and open <b>Ananicy Configurator</b> from the app menu. In the <b>Types &amp; Rules</b> tab:</p>
+      <ul>
+        <li>Click <b>Add from running process…</b></li>
+        <li>Pick the game's process from the list. It's the same name you saw in Sysmon.</li>
+        <li>Choose <b>Game</b> as the type and click <b>OK</b>.</li>
+      </ul>
+    </li>
+    <li>
+      <h3>Save and restart the service</h3>
+      <p>Click <b>Save &amp; Restart service</b>. If it asks for your password, enter it. The rule applies to the running game within a few seconds, so you don't need to restart it.</p>
+    </li>
+    <li>
+      <h3>Check again</h3>
+      <p>Back in Sysmon, the game's <b>Nice</b> column should now show <code>-5</code>. From now on, the game gets priority every time you start it.</p>
+    </li>
+  </ol>
+
+  <div class="tips">
+    <h3>Good to know</h3>
+    <ul>
+      <li>Your rules are saved in <code>/etc/ananicy.d</code>. Lunar updates only replace the packaged rules, so your own rules are never overwritten.</li>
+      <li>Changed your mind? Select the rule in Ananicy Configurator and delete it, or use <b>Reset to packaged</b> for a packaged rule you edited.</li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<nav class="toc" aria-label="Guides"><b>Guides</b><ol><li><a href="#game-priority">Make sure your game gets priority</a></li></ol><p class="soon">More guides coming.</p></nav>
+</div></div></main>
+
+<footer><div class="wrap"><a href="index.html">Home</a><a href="guide.html">User guide</a><a href="legal-notice.html">Legal notice</a><a href="privacy.html">Privacy policy</a><a href="https://github.com/WhitePeace36/LunarOs" target="_blank" rel="noopener">GitHub</a></div></footer>
+</body>
+</html>
